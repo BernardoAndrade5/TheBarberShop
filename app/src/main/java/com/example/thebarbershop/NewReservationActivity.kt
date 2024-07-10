@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.thebarbershop.Models.Appointment
 import com.example.thebarbershop.Utils.FirebaseUtils
-import com.example.thebarbershop.databinding.ActivityHomeBinding
+import com.example.thebarbershop.Utils.UiUtils
 import com.example.thebarbershop.databinding.ActivityNewReservationBinding
 import kotlinx.coroutines.launch
 
@@ -21,6 +21,13 @@ class NewReservationActivity : AppCompatActivity() {
         setContentView(view)
 
         binding.apply {
+            dateInput.setOnClickListener{
+                UiUtils.showDatePickerDialog(this@NewReservationActivity, dateInput)
+            }
+            timeInput.setOnClickListener{
+                UiUtils.showTimePickerDialog(this@NewReservationActivity, timeInput)
+            }
+
             submitButton.setOnClickListener{
                 Log.d("TEXTINPUT", barberInput.text.toString())
                 val newAppointment = Appointment(
@@ -32,6 +39,7 @@ class NewReservationActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     firebase.addApointmentToFirestore(newAppointment)
                 }
+                finish()
             }
         }
     }

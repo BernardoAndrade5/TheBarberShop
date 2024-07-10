@@ -1,10 +1,15 @@
 package com.example.thebarbershop.Utils
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.thebarbershop.Models.Appointment
 import com.example.thebarbershop.Models.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Date
 
 class FirebaseUtils {
     private val db = Firebase.firestore
@@ -59,6 +64,23 @@ class FirebaseUtils {
                 "reservationName" to data.reservationName
             )
             db.collection("apointments").add(apointmentMap).await()
+            true
+        }catch (e:Exception){
+            false
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun clearPastApointmentsFromFirestore() : Boolean{
+        return try {
+            val apointmentList = getApointmentsFromFirestore()
+            val pastApointments = apointmentList.filter {
+                val apointmentDate = LocalDate.parse(it.date, DateTimeFormatter.ISO_DATE)
+                apointmentDate.isBefore(LocalDate.now())
+            }
+            pastApointments.forEach{apointment ->
+                db.collection("apointments").document(apointment.id).delete().await()
+            }
             true
         }catch (e:Exception){
             false
