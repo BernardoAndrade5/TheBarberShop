@@ -1,11 +1,13 @@
+package com.example.thebarbershop.views.homeActivity
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.thebarbershop.Models.Appointment
+import com.example.thebarbershop.models.Appointment
 import com.example.thebarbershop.databinding.AppointmentsListItemBinding
 
-class AppointmentsAdapter(private val appointmentsList: List<Appointment>) :
+class AppointmentsAdapter(private val appointmentsList: MutableList<Appointment>) :
     RecyclerView.Adapter<AppointmentsAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: AppointmentsListItemBinding) :
@@ -32,10 +34,9 @@ class AppointmentsAdapter(private val appointmentsList: List<Appointment>) :
         return appointmentsList.size
     }
 
-    // Update the adapter's data
-    /*fun updateData(newAppointmentsList: List<Appointment>) {
+    fun updateData(newAppointmentsList: List<Appointment>) {
         appointmentsList.clear()
         appointmentsList.addAll(newAppointmentsList)
         notifyDataSetChanged()
-    }*/
+    }
 }

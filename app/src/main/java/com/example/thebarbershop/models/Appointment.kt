@@ -1,7 +1,4 @@
-package com.example.thebarbershop.Models
-
-import java.sql.Time
-import java.util.Date
+package com.example.thebarbershop.models
 
 data class Appointment(
     val id : String = "",

@@ -1,15 +1,15 @@
-package com.example.thebarbershop.Utils
+package com.example.thebarbershop.data
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
-import com.example.thebarbershop.Models.Appointment
-import com.example.thebarbershop.Models.User
+import com.example.thebarbershop.models.Appointment
+import com.example.thebarbershop.models.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Date
 
 class FirebaseUtils {
     private val db = Firebase.firestore

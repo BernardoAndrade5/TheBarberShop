@@ -1,4 +1,4 @@
-package com.example.thebarbershop.Models
+package com.example.thebarbershop.models
 
 data class User (
     val firstName : String = "",

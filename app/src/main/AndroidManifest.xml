@@ -14,7 +14,7 @@
         android:theme="@style/Theme.TheBarberShop"
         tools:targetApi="31">
         <activity
-            android:name=".HomeActivity"
+            android:name=".views.homeActivity.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,11 +23,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".views.MainActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".NewReservationActivity"
+            android:name=".views.NewReservationActivity"
             android:exported="true">
         </activity>
     </application>

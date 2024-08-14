@@ -1,12 +1,12 @@
-package com.example.thebarbershop
+package com.example.thebarbershop.views
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.thebarbershop.Models.Appointment
-import com.example.thebarbershop.Utils.FirebaseUtils
-import com.example.thebarbershop.Utils.UiUtils
+import com.example.thebarbershop.models.Appointment
+import com.example.thebarbershop.data.FirebaseUtils
+import com.example.thebarbershop.utils.UiUtils
 import com.example.thebarbershop.databinding.ActivityNewReservationBinding
 import kotlinx.coroutines.launch
 

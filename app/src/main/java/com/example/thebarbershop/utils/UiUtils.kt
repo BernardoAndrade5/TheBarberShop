@@ -1,4 +1,4 @@
-package com.example.thebarbershop.Utils
+package com.example.thebarbershop.utils
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
