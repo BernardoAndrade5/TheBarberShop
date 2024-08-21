@@ -11,17 +11,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.thebarbershop.data.FirebaseUtils
 import com.example.thebarbershop.databinding.ActivityHomeBinding
 import com.example.thebarbershop.repositorys.AppointmentRepository
+import com.example.thebarbershop.repositorys.BusinessRepository
 import com.example.thebarbershop.viewModelFactory.HomeViewModelFactory
 import com.example.thebarbershop.views.NewReservationActivity
+import com.google.api.Distribution.BucketOptions.Linear
 import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding : ActivityHomeBinding
     private lateinit var appointmentAdapter: AppointmentsAdapter
+    private lateinit var nexToYouBusinessAdapter : NextToYouAdapter
     private val firebaseUtils = FirebaseUtils()
-    private val repository = AppointmentRepository(firebaseUtils)
+    private val appointmentRepository = AppointmentRepository(firebaseUtils)
+    private val businessRepository = BusinessRepository(firebaseUtils)
     private val homeViewModel: HomeViewModel by viewModels(){
-        HomeViewModelFactory(repository)
+        HomeViewModelFactory(appointmentRepository, businessRepository)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -32,8 +36,13 @@ class HomeActivity : AppCompatActivity() {
         setContentView(view)
 
         appointmentAdapter = AppointmentsAdapter(mutableListOf())
-        binding.appointmentsRv.layoutManager = LinearLayoutManager(applicationContext)
+        binding.appointmentsRv.layoutManager = LinearLayoutManager(this)
         binding.appointmentsRv.adapter = appointmentAdapter
+
+        nexToYouBusinessAdapter = NextToYouAdapter(this, mutableListOf())
+        binding.nextToYouRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.nextToYouRv.adapter = nexToYouBusinessAdapter
+
 
         lifecycleScope.launch {
             homeViewModel.uiState.collect { uiState ->
@@ -43,6 +52,7 @@ class HomeActivity : AppCompatActivity() {
                     //TODO : Show error message
                 } else {
                     appointmentAdapter.updateData(uiState.appointments)
+                    nexToYouBusinessAdapter.updateData(uiState.nextToYouBusiness)
                 }
             }
         }
@@ -53,5 +63,6 @@ class HomeActivity : AppCompatActivity() {
         }
 
         homeViewModel.loadAppointments()
+        homeViewModel.loadBusiness()
     }
 }

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TheBarberShop</string>
+    <string name="seja_bem_vindo">Seja bem-vindo</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="notifications">Notifications</string>
+    <string name="pr_ximo_de_si">Próximo de si</string>
 </resources>

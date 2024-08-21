@@ -4,6 +4,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.thebarbershop.models.Appointment
+import com.example.thebarbershop.models.Business
 import com.example.thebarbershop.models.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -25,6 +26,29 @@ class FirebaseUtils {
             true
         }catch (e : Exception){
             false
+        }
+    }
+
+    suspend fun addBusineesToFirestore(business: Business) : Boolean{
+        return try {
+            val businessMap = hashMapOf(
+                "name" to business.name,
+                "address" to business.address,
+                "type" to business.type
+            )
+            db.collection("business").add(businessMap).await()
+            true
+        }catch (e: Exception){
+            false
+        }
+    }
+
+    suspend fun getBusinessFromFirestore() : List<Business>{
+        return try {
+            val result = db.collection("business").get().await()
+            result.documents.mapNotNull { it.toObject(Business::class.java) }
+        }catch (e:Exception){
+            emptyList()
         }
     }
 
