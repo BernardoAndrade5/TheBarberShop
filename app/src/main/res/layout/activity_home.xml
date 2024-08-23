@@ -1,188 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
-        <RelativeLayout
-            android:id="@+id/introTextView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/black"
-            android:layout_marginHorizontal="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/welcomeTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:text="@string/seja_bem_vindo"/>
-
-            <TextView
-                android:id="@+id/dateTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:layout_below="@id/welcomeTv"
-                android:text="@string/placeholder"/>
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignBottom="@id/dateTv"
-                android:contentDescription="@string/notifications"
-                android:src="@drawable/notificaitons_icon"
-                app:tint="@color/white" />
-
-            <com.google.android.material.search.SearchBar
-                android:id="@+id/searchBarView"
+            <RelativeLayout
+                android:id="@+id/introTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/dateTv"
-                style="@style/SmallCornerShape"/>
-
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/promoCard"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:layout_constraintTop_toBottomOf="@id/introTextView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_margin="16dp"
-            android:background="@drawable/rounded_corners_grey_background">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/barber"
-                android:scaleType="centerCrop"
-                />
-
-
-            <TextView
-                android:id="@+id/cardViewSubtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:text="Venha descorbrir os novos establecimentos"
-                android:layout_margin="16dp"
-                android:textColor="@color/white"
-                />
-
-            <TextView
-                android:id="@+id/cardViewTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/cardViewSubtitle"
-                android:layout_alignParentStart="true"
-                android:text="Novas ofertas"
-                android:layout_margin="16dp"
-                android:textColor="@color/white"
-                />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/nextToYouSection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/promoCard"
-            android:layout_marginHorizontal="16dp">
-
-            <TextView
-                android:id="@+id/nextToYouTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/pr_ximo_de_si">
-            </TextView>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/nextToYouRv"
-                android:layout_below="@id/nextToYouTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:scrollbars="horizontal"/>
-
-        </RelativeLayout>
-
-        <com.google.android.material.divider.MaterialDivider
-            android:id="@+id/divider1"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            app:dividerColor="@color/black"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/nextToYouSection"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginHorizontal="16dp"/>
-
-        <RelativeLayout
-            android:id="@+id/appoitmentsSection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider1">
-
-
-            <TextView
-                android:id="@+id/myAppointmentsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Minhas marcações"
-                android:layout_marginTop="4dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@color/black"
+                android:layout_marginHorizontal="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                android:textSize="24sp"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/appointmentsRv"
+                <TextView
+                    android:id="@+id/welcomeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:text="@string/seja_bem_vindo"/>
+
+                <TextView
+                    android:id="@+id/dateTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_below="@id/welcomeTv"
+                    android:text="@string/placeholder"/>
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignBottom="@id/dateTv"
+                    android:contentDescription="@string/notifications"
+                    android:src="@drawable/notificaitons_icon"
+                    app:tint="@color/white" />
+
+                <com.google.android.material.search.SearchBar
+                    android:id="@+id/searchBarView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dateTv"
+                    style="@style/SmallCornerShape"/>
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/promoCard"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:layout_constraintTop_toBottomOf="@id/introTextView"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_margin="16dp"
+                android:background="@drawable/rounded_corners_grey_background">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/barber"
+                    android:scaleType="centerCrop"
+                    />
+
+
+                <TextView
+                    android:id="@+id/cardViewSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:text="Venha descorbrir os novos establecimentos"
+                    android:layout_margin="16dp"
+                    android:textColor="@color/white"
+                    />
+
+                <TextView
+                    android:id="@+id/cardViewTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/cardViewSubtitle"
+                    android:layout_alignParentStart="true"
+                    android:text="Novas ofertas"
+                    android:layout_margin="16dp"
+                    android:textColor="@color/white"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/nextToYouSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/myAppointmentsTitle"
-                android:layout_margin="16dp"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/promoCard"
+                android:layout_marginHorizontal="16dp">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/nextToYouTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pr_ximo_de_si">
+                </TextView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/nextToYouRv"
+                    android:layout_below="@id/nextToYouTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal"/>
+
+            </RelativeLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                app:dividerColor="@color/black"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/nextToYouSection"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"/>
+
+            <RelativeLayout
+                android:id="@+id/appoitmentsSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider1">
 
 
-        <Button
-            android:id="@+id/newReservationButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/appoitmentsSection"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:text="Add new reservation"
-            android:layout_margin="16dp"/>
+                <TextView
+                    android:id="@+id/myAppointmentsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Minhas marcações"
+                    android:layout_marginTop="4dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentStart="true"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="24sp"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/appointmentsRv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/myAppointmentsTitle"
+                    android:layout_margin="16dp"
+                    />
+
+            </RelativeLayout>
 
 
+            <Button
+                android:id="@+id/newReservationButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/appoitmentsSection"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="Add new reservation"
+                android:layout_margin="16dp"/>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-</ScrollView>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

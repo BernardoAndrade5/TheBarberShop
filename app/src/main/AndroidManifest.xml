@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:name=".TheBarberShopApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -23,11 +24,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.MainActivity"
+            android:name=".views.NewReservationActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".views.NewReservationActivity"
+            android:name=".views.searchActivity.SearchActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".views.appointmentsActivity.AppointmentActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".views.profileActivity.ProfileActivity"
             android:exported="true">
         </activity>
     </application>

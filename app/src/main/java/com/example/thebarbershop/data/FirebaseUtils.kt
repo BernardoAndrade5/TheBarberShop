@@ -11,8 +11,10 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
-class FirebaseUtils {
+class FirebaseUtils @Inject
+constructor(){
     private val db = Firebase.firestore
 
     suspend fun addUserToFirestore(user: User) : Boolean {

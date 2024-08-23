@@ -3,37 +3,39 @@ package com.example.thebarbershop.views.homeActivity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.thebarbershop.R
 import com.example.thebarbershop.data.FirebaseUtils
 import com.example.thebarbershop.databinding.ActivityHomeBinding
+import com.example.thebarbershop.databinding.BottomNavigationBarBinding
 import com.example.thebarbershop.repositorys.AppointmentRepository
 import com.example.thebarbershop.repositorys.BusinessRepository
-import com.example.thebarbershop.viewModelFactory.HomeViewModelFactory
+import com.example.thebarbershop.views.BaseActivity
+import com.example.thebarbershop.views.NavigationHandler
 import com.example.thebarbershop.views.NewReservationActivity
 import com.google.api.Distribution.BucketOptions.Linear
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-class HomeActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class HomeActivity : BaseActivity() {
     private lateinit var binding : ActivityHomeBinding
     private lateinit var appointmentAdapter: AppointmentsAdapter
     private lateinit var nexToYouBusinessAdapter : NextToYouAdapter
-    private val firebaseUtils = FirebaseUtils()
-    private val appointmentRepository = AppointmentRepository(firebaseUtils)
-    private val businessRepository = BusinessRepository(firebaseUtils)
-    private val homeViewModel: HomeViewModel by viewModels(){
-        HomeViewModelFactory(appointmentRepository, businessRepository)
-    }
+    private val homeViewModel: HomeViewModel by viewModels()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         val view = binding.root
-        setContentView(view)
+        val contentFrame = findViewById<FrameLayout>(R.id.container)
+        contentFrame.addView(view)
 
         appointmentAdapter = AppointmentsAdapter(mutableListOf())
         binding.appointmentsRv.layoutManager = LinearLayoutManager(this)
@@ -61,8 +63,9 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, NewReservationActivity::class.java)
             startActivity(intent)
         }
+    }
 
-        homeViewModel.loadAppointments()
-        homeViewModel.loadBusiness()
+    override fun onHomeSelected() {
+        TODO("Not yet implemented")
     }
 }
