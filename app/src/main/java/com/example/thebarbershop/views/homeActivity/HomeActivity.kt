@@ -21,6 +21,7 @@ import com.example.thebarbershop.views.NavigationHandler
 import com.example.thebarbershop.views.NewReservationActivity
 import com.example.thebarbershop.views.loginActivity.LoginActivity
 import com.example.thebarbershop.views.registerActivity.RegisterActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.api.Distribution.BucketOptions.Linear
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,6 +48,7 @@ class HomeActivity : BaseActivity() {
         contentFrame.addView(view)
 
         handleSignInSignOutBtn()
+        highlightCurrentMenuItem()
 
         appointmentAdapter = AppointmentsAdapter(mutableListOf())
         binding.appointmentsRv.layoutManager = LinearLayoutManager(this)
@@ -92,6 +94,7 @@ class HomeActivity : BaseActivity() {
         super.onResume()
         binding.userNameTv.text = updateData()
         handleSignInSignOutBtn()
+        highlightCurrentMenuItem()
     }
 
     private fun updateData() : String{
@@ -111,7 +114,8 @@ class HomeActivity : BaseActivity() {
     }
 
 
-    override fun onHomeSelected() {
-        TODO("Not yet implemented")
+    override fun highlightCurrentMenuItem() {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.selectedItemId = R.id.navigation_home
     }
 }
