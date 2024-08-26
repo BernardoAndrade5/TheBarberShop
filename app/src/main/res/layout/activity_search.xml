@@ -5,16 +5,58 @@
     android:layout_width="match_parent"
              android:layout_height="match_parent">
 
-    <com.google.android.material.search.SearchBar
-        android:id="@+id/searchBarView"
-        style="@style/SmallCornerShape"
-        android:layout_width="0dp"
+    <RelativeLayout
+        android:layout_marginTop="24dp"
+        android:id="@+id/introTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/welcomeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="@string/seja_bem_vindo"/>
+
+        <TextView
+            android:id="@+id/userNameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_alignStart="@id/welcomeTv"
+            android:layout_marginLeft="110dp"
+            android:text="User Name"/>
+
+        <TextView
+            android:id="@+id/dateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_below="@id/welcomeTv"
+            android:text="@string/placeholder"/>
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@id/dateTv"
+            android:contentDescription="@string/notifications"
+            android:src="@drawable/notificaitons_icon"
+            app:tint="@color/white" />
+
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/searchBarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dateTv"
+            style="@style/SmallCornerShape"/>
+
+
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
