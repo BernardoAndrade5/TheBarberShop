@@ -4,4 +4,6 @@
     <string name="placeholder">Placeholder</string>
     <string name="notifications">Notifications</string>
     <string name="pr_ximo_de_si">Próximo de si</string>
+    <string name="pesquisar">Pesquisar…</string>
+
 </resources>
