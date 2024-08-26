@@ -3,37 +3,50 @@ package com.example.thebarbershop.views.homeActivity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.thebarbershop.R
 import com.example.thebarbershop.data.FirebaseUtils
 import com.example.thebarbershop.databinding.ActivityHomeBinding
+import com.example.thebarbershop.databinding.BottomNavigationBarBinding
 import com.example.thebarbershop.repositorys.AppointmentRepository
 import com.example.thebarbershop.repositorys.BusinessRepository
-import com.example.thebarbershop.viewModelFactory.HomeViewModelFactory
+import com.example.thebarbershop.views.BaseActivity
+import com.example.thebarbershop.views.NavigationHandler
 import com.example.thebarbershop.views.NewReservationActivity
+import com.example.thebarbershop.views.loginActivity.LoginActivity
+import com.example.thebarbershop.views.registerActivity.RegisterActivity
 import com.google.api.Distribution.BucketOptions.Linear
+import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-class HomeActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class HomeActivity : BaseActivity() {
     private lateinit var binding : ActivityHomeBinding
     private lateinit var appointmentAdapter: AppointmentsAdapter
     private lateinit var nexToYouBusinessAdapter : NextToYouAdapter
-    private val firebaseUtils = FirebaseUtils()
-    private val appointmentRepository = AppointmentRepository(firebaseUtils)
-    private val businessRepository = BusinessRepository(firebaseUtils)
-    private val homeViewModel: HomeViewModel by viewModels(){
-        HomeViewModelFactory(appointmentRepository, businessRepository)
+    private val homeViewModel: HomeViewModel by viewModels()
+
+    companion object{
+        lateinit var auth : FirebaseAuth
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityHomeBinding.inflate(layoutInflater)
         val view = binding.root
-        setContentView(view)
+        val contentFrame = findViewById<FrameLayout>(R.id.container)
+        contentFrame.addView(view)
+
+        handleSignInSignOutBtn()
 
         appointmentAdapter = AppointmentsAdapter(mutableListOf())
         binding.appointmentsRv.layoutManager = LinearLayoutManager(this)
@@ -50,9 +63,10 @@ class HomeActivity : AppCompatActivity() {
                     //TODO : Show loading indicator
                 } else if (uiState.errorMessage != null) {
                     //TODO : Show error message
-                } else {
+                }else{
                     appointmentAdapter.updateData(uiState.appointments)
                     nexToYouBusinessAdapter.updateData(uiState.nextToYouBusiness)
+                    binding.dateTv.text = uiState.userEmail
                 }
             }
         }
@@ -62,7 +76,42 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        homeViewModel.loadAppointments()
-        homeViewModel.loadBusiness()
+        binding.signOutBtn.setOnClickListener {
+            homeViewModel.logoutCurrentUser()
+            binding.dateTv.text = updateData()
+            handleSignInSignOutBtn()
+        }
+
+        binding.signInBtn.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.dateTv.text = updateData()
+        handleSignInSignOutBtn()
+    }
+
+    private fun updateData() : String{
+        return "Email : ${auth.currentUser?.email}"
+    }
+
+    private fun handleSignInSignOutBtn(){
+        auth = FirebaseAuth.getInstance()
+
+        if (auth.currentUser == null){
+            binding.signInBtn.visibility = View.VISIBLE
+            binding.signOutBtn.visibility = View.GONE
+        }else{
+            binding.signInBtn.visibility = View.GONE
+            binding.signOutBtn.visibility = View.VISIBLE
+        }
+    }
+
+
+    override fun onHomeSelected() {
+        TODO("Not yet implemented")
     }
 }

@@ -3,8 +3,10 @@ package com.example.thebarbershop.repositorys
 import android.util.Log
 import com.example.thebarbershop.data.FirebaseUtils
 import com.example.thebarbershop.models.Appointment
+import javax.inject.Inject
 
-class AppointmentRepository(private val firebaseUtils : FirebaseUtils) {
+class AppointmentRepository @Inject
+constructor(private val firebaseUtils : FirebaseUtils) {
     private val appointments = mutableListOf<Appointment>()
 
     suspend fun addAppoitment(appoitment: Appointment):Boolean{

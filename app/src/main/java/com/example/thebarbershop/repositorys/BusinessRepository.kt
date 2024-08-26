@@ -4,8 +4,10 @@ import android.util.Log
 import com.example.thebarbershop.data.FirebaseUtils
 import com.example.thebarbershop.models.Appointment
 import com.example.thebarbershop.models.Business
+import javax.inject.Inject
 
-class BusinessRepository(private val firebaseUtils : FirebaseUtils) {
+class BusinessRepository @Inject
+constructor(private val firebaseUtils : FirebaseUtils) {
     private val businessList = mutableListOf<Business>()
 
     suspend fun addAppoitment(business: Business):Boolean{
