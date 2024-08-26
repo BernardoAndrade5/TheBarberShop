@@ -33,6 +33,16 @@
                     android:text="@string/seja_bem_vindo"/>
 
                 <TextView
+                    android:id="@+id/userNameTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_alignStart="@id/welcomeTv"
+                    android:layout_marginLeft="110dp"
+                    android:text="User Name"/>
+
+                <TextView
                     android:id="@+id/dateTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

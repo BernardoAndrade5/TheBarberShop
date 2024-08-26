@@ -66,7 +66,7 @@ class HomeActivity : BaseActivity() {
                 }else{
                     appointmentAdapter.updateData(uiState.appointments)
                     nexToYouBusinessAdapter.updateData(uiState.nextToYouBusiness)
-                    binding.dateTv.text = uiState.userEmail
+                    binding.userNameTv.text = uiState.userEmail
                 }
             }
         }
@@ -78,7 +78,7 @@ class HomeActivity : BaseActivity() {
 
         binding.signOutBtn.setOnClickListener {
             homeViewModel.logoutCurrentUser()
-            binding.dateTv.text = updateData()
+            binding.userNameTv.text = updateData()
             handleSignInSignOutBtn()
         }
 
@@ -90,12 +90,12 @@ class HomeActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        binding.dateTv.text = updateData()
+        binding.userNameTv.text = updateData()
         handleSignInSignOutBtn()
     }
 
     private fun updateData() : String{
-        return "Email : ${auth.currentUser?.email}"
+        return auth.currentUser?.email.toString()
     }
 
     private fun handleSignInSignOutBtn(){
