@@ -4,6 +4,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.thebarbershop.models.Appointment
+import com.example.thebarbershop.models.BarberShop
 import com.example.thebarbershop.models.Business
 import com.example.thebarbershop.models.User
 import com.google.firebase.auth.FirebaseAuth
@@ -112,6 +113,30 @@ constructor() {
             true
         } catch (e: Exception) {
             false
+        }
+    }
+
+    suspend fun addBarberShopToFirestore(barberShop: BarberShop) : Boolean {
+        return try{
+            val barberShopMap = hashMapOf(
+                "name" to barberShop.name,
+                "district" to barberShop.district,
+                "location" to barberShop.location,
+                "address" to barberShop.address
+            )
+            db.collection("users").add(barberShopMap).await()
+            true
+        }catch (e : Exception){
+            false
+        }
+    }
+
+    suspend fun getBarberShopsFromFirestore() : List<BarberShop>{
+        return try {
+            val result = db.collection("barbershop").get().await()
+            result.documents.mapNotNull { it.toObject(BarberShop::class.java) }
+        }catch (e:Exception){
+            emptyList()
         }
     }
 }
