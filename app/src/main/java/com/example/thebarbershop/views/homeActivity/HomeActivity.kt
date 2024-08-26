@@ -26,7 +26,10 @@ import com.google.api.Distribution.BucketOptions.Linear
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
+
 @AndroidEntryPoint
 class HomeActivity : BaseActivity() {
     private lateinit var binding : ActivityHomeBinding
@@ -53,10 +56,18 @@ class HomeActivity : BaseActivity() {
 
         handleSignInSignOutBtn()
 
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, day)
+
+        val dateFormat = SimpleDateFormat("EEEE, d 'de' MMM yyyy", Locale("pt", "PT"))
+        val formattedDate = dateFormat.format(calendar.time)
+
+        binding.dateTv.text = formattedDate
+
         appointmentAdapter = AppointmentsAdapter(mutableListOf())
         binding.appointmentsRv.layoutManager = LinearLayoutManager(this)
         binding.appointmentsRv.adapter = appointmentAdapter
-        binding.dateTv.text = "$day/$month/$year";
+        binding.dateTv.text = formattedDate;
         nexToYouBusinessAdapter = NextToYouAdapter(this, mutableListOf())
         binding.nextToYouRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.nextToYouRv.adapter = nexToYouBusinessAdapter
