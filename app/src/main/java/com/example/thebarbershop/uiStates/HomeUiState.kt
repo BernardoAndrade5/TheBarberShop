@@ -4,11 +4,13 @@ import com.example.thebarbershop.models.Appointment
 import com.example.thebarbershop.models.Business
 import com.example.thebarbershop.models.User
 
-data class HomeUiState(
-    val appointments: List<Appointment> = emptyList(),
-    val nextToYouBusiness : List<Business> = emptyList(),
-    val userEmail : String = "",
-    val isAuthenticated : Boolean = false,
-    val isLoading: Boolean = false,
-    val errorMessage: String? = null
-)
+sealed class HomeUiState{
+    object Loading : HomeUiState()
+    data class Success(
+        val appointment: List<Appointment>,
+        val nexToYouBusiness: List<Business>,
+        val userEmail : String,
+        val isAuthenticated : Boolean
+    ) : HomeUiState()
+    data class Error(val errorMessage: String) : HomeUiState()
+}
