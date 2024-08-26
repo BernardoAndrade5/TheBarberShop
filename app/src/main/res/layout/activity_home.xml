@@ -171,7 +171,6 @@
 
             </RelativeLayout>
 
-
             <Button
                 android:id="@+id/newReservationButton"
                 android:layout_width="match_parent"
@@ -180,6 +179,26 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:text="Add new reservation"
+                android:layout_margin="16dp"/>
+
+            <Button
+                android:id="@+id/signOutBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/newReservationButton"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="SignOut"
+                android:layout_margin="16dp"/>
+
+            <Button
+                android:id="@+id/signInBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/signOutBtn"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:text="SignIn"
                 android:layout_margin="16dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

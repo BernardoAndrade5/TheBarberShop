@@ -6,6 +6,8 @@ import androidx.annotation.RequiresApi
 import com.example.thebarbershop.models.Appointment
 import com.example.thebarbershop.models.Business
 import com.example.thebarbershop.models.User
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -14,11 +16,11 @@ import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class FirebaseUtils @Inject
-constructor(){
+constructor() {
     private val db = Firebase.firestore
 
-    suspend fun addUserToFirestore(user: User) : Boolean {
-        return try{
+    suspend fun addUserToFirestore(user: User): Boolean {
+        return try {
             val userMap = hashMapOf(
                 "firstName" to user.firstName,
                 "lastName" to user.lastName,
@@ -26,12 +28,12 @@ constructor(){
             )
             db.collection("users").add(userMap).await()
             true
-        }catch (e : Exception){
+        } catch (e: Exception) {
             false
         }
     }
 
-    suspend fun addBusineesToFirestore(business: Business) : Boolean{
+    suspend fun addBusineesToFirestore(business: Business): Boolean {
         return try {
             val businessMap = hashMapOf(
                 "name" to business.name,
@@ -40,48 +42,48 @@ constructor(){
             )
             db.collection("business").add(businessMap).await()
             true
-        }catch (e: Exception){
+        } catch (e: Exception) {
             false
         }
     }
 
-    suspend fun getBusinessFromFirestore() : List<Business>{
+    suspend fun getBusinessFromFirestore(): List<Business> {
         return try {
             val result = db.collection("business").get().await()
             result.documents.mapNotNull { it.toObject(Business::class.java) }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             emptyList()
         }
     }
 
-    suspend fun getUsersFromFirestore() : List<User> {
+    suspend fun getUsersFromFirestore(): List<User> {
         return try {
             val result = db.collection("users").get().await()
             result.documents.mapNotNull { it.toObject(User::class.java) }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             emptyList()
         }
     }
 
-    suspend fun searchUserByLastName(lastName: String) : User?{
-        return try{
+    suspend fun searchUserByLastName(lastName: String): User? {
+        return try {
             val users = getUsersFromFirestore()
             users.find { it.lastName == lastName }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             throw e
         }
     }
 
-    suspend fun getApointmentsFromFirestore() : List<Appointment>{
+    suspend fun getApointmentsFromFirestore(): List<Appointment> {
         return try {
             val result = db.collection("apointments").get().await()
             result.documents.mapNotNull { it.toObject(Appointment::class.java) }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             emptyList()
         }
     }
 
-    suspend fun addApointmentToFirestore(data : Appointment) : Boolean{
+    suspend fun addApointmentToFirestore(data: Appointment): Boolean {
         return try {
             val apointmentMap = hashMapOf(
                 "barber" to data.barber,
@@ -91,24 +93,24 @@ constructor(){
             )
             db.collection("apointments").add(apointmentMap).await()
             true
-        }catch (e:Exception){
+        } catch (e: Exception) {
             false
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun clearPastApointmentsFromFirestore() : Boolean{
+    suspend fun clearPastApointmentsFromFirestore(): Boolean {
         return try {
             val apointmentList = getApointmentsFromFirestore()
             val pastApointments = apointmentList.filter {
                 val apointmentDate = LocalDate.parse(it.date, DateTimeFormatter.ISO_DATE)
                 apointmentDate.isBefore(LocalDate.now())
             }
-            pastApointments.forEach{apointment ->
+            pastApointments.forEach { apointment ->
                 db.collection("apointments").document(apointment.id).delete().await()
             }
             true
-        }catch (e:Exception){
+        } catch (e: Exception) {
             false
         }
     }
