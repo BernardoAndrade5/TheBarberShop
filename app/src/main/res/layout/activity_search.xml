@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_marginTop="24dp"
         android:id="@+id/introTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:layout_marginHorizontal="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:text="@string/seja_bem_vindo"/>
+            android:text="@string/seja_bem_vindo" />
 
         <TextView
             android:id="@+id/userNameTv"
@@ -31,7 +31,7 @@
             android:textStyle="bold"
             android:layout_alignStart="@id/welcomeTv"
             android:layout_marginLeft="110dp"
-            android:text="User Name"/>
+            android:text="User Name" />
 
         <TextView
             android:id="@+id/dateTv"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:layout_below="@id/welcomeTv"
-            android:text="@string/placeholder"/>
+            android:text="@string/placeholder" />
 
         <ImageView
             android:layout_width="32dp"
@@ -55,8 +55,93 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/dateTv"
-            style="@style/SmallCornerShape"/>
+            android:hint="@string/pesquise_pelo_nome"
+            style="@style/SmallCornerShape" />
+        <LinearLayout
+            android:id="@+id/buttonContainer"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/searchBarView"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:padding="8dp">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonFilterName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/dark_grey"
+                android:text="@string/Nome"
+                android:textColor="@color/white"
+                app:icon="@drawable/namestore"
+                app:cornerRadius="20dp"
+                app:iconTint="@color/white"
+                android:textSize="10sp"
+                android:layout_marginEnd="4dp"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonFilterCity"
+                android:layout_width="0dp"
+                android:textSize="10sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/dark_grey"
+                android:text="@string/cidade"
+                android:textColor="@color/white"
+                app:icon="@drawable/city"
+                app:cornerRadius="20dp"
+                app:iconTint="@color/white"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonFilterProximity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/dark_grey"
+                android:text="@string/Proximas"
+                android:textColor="@color/white"
+                app:icon="@drawable/location"
+                app:cornerRadius="20dp"
+                android:textSize="10sp"
+                app:iconTint="@color/white"
+                android:layout_marginStart="4dp"/>
+
+        </LinearLayout>
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="219dp"
+        android:layout_height="329dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introTextView"
+        app:srcCompat="@drawable/searchimage" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/EncontreEstabelecimento"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/PesquiseNomeOuCidade"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
