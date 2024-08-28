@@ -5,16 +5,22 @@ import androidx.lifecycle.viewModelScope
 import com.example.thebarbershop.repositorys.AppointmentRepository
 import com.example.thebarbershop.repositorys.AuthRepository
 import com.example.thebarbershop.repositorys.BusinessRepository
+import com.example.thebarbershop.uiStates.BaseUiState
 import com.example.thebarbershop.uiStates.HomeUiState
+import com.example.thebarbershop.utils.UiUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,93 +28,35 @@ class HomeViewModel @Inject
 constructor(
     private val appointmentsRepository: AppointmentRepository,
     private val businessRepository: BusinessRepository,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
-    val uiState: StateFlow<HomeUiState> = _uiState
-
+    private val _uiState = MutableStateFlow<BaseUiState<HomeUiState.Success>>(BaseUiState.Loading)
+    val uiState: StateFlow<BaseUiState<HomeUiState.Success>> = _uiState.asStateFlow()
     init {
         loadData()
     }
 
     private fun loadData(){
         viewModelScope.launch {
-            _uiState.value = HomeUiState.Loading
+            _uiState.value = BaseUiState.Loading
             try {
                 val appointments = appointmentsRepository.fetchAppoitmentsFromFirestore()
                 val business = businessRepository.fetchBusinessFromFirestore()
                 val isAuthenticated = authRepository.isUserAuthenticated()
                 val userEmail = authRepository.getCurrentUserEmail().toString()
-                _uiState.value = HomeUiState.Success(
-                    appointments,
-                    business,
-                    userEmail,
-                    isAuthenticated
+                _uiState.value = BaseUiState.Success(
+                    HomeUiState.Success(
+                        appointments,
+                        business,
+                        userEmail,
+                        isAuthenticated
+                    )
                 )
             } catch (e: Exception) {
-                _uiState.value = HomeUiState.Error(e.message.toString())
+                _uiState.value = BaseUiState.Error(e.message.toString())
             }
         }
     }
-    /*private fun loadAppointmentsFlow(): Flow<HomeUiState> = flow {
-        emit(HomeUiState(isLoading = true))
-        try {
-            val appointments = appointmentsRepository.fetchAppoitmentsFromFirestore()
-            emit(HomeUiState(appointments = appointments, isLoading = false))
-        } catch (e: Exception) {
-            emit(HomeUiState(errorMessage = e.message, isLoading = false))
-        }
-    }
-
-    private fun loadBusinessFlow(): Flow<HomeUiState> = flow {
-        emit(HomeUiState(isLoading = true))
-        try {
-            val business = businessRepository.fetchBusinessFromFirestore()
-            emit(HomeUiState(nextToYouBusiness = business, isLoading = false))
-        } catch (e: Exception) {
-            emit(HomeUiState(errorMessage = e.message, isLoading = false))
-        }
-    }
-
-    private fun loadUserFlow(): Flow<HomeUiState> = flow {
-        emit(HomeUiState(isLoading = true))
-        try {
-            // Emit initial state with isAuthenticated = false and userEmail = null
-            emit(HomeUiState(isAuthenticated = false, userEmail = null.toString(), isLoading = false))
-
-            val isAuthenticated = authRepository.isUserAuthenticated()
-            val userEmail = authRepository.getCurrentUserEmail().toString()
-            emit(HomeUiState(isAuthenticated = isAuthenticated, userEmail = userEmail, isLoading = false))
-        } catch (e: Exception) {
-            emit(HomeUiState(errorMessage = e.message, isLoading = false))
-        }
-    }
-
-    fun getDataBusinessandAppoitments() {
-        viewModelScope.launch {
-            // Create flows separately and collect in a non-blocking way
-            val appointmentsFlow = loadAppointmentsFlow()
-            val businessFlow = loadBusinessFlow()
-            val userFlow = loadUserFlow()
-
-            combine(
-                appointmentsFlow,
-                businessFlow,
-                userFlow
-            ) { appointmentsState, businessState, userState ->
-                HomeUiState(
-                    appointments = appointmentsState.appointments,
-                    nextToYouBusiness = businessState.nextToYouBusiness,
-                    isAuthenticated = userState.isAuthenticated,
-                    userEmail = userState.userEmail,
-                    isLoading = appointmentsState.isLoading || businessState.isLoading || userState.isLoading,
-                    errorMessage = appointmentsState.errorMessage ?: businessState.errorMessage ?: userState.errorMessage
-                )
-            }.collect { combinedState ->
-                _uiState.value = combinedState
-            }
-        }
-    }*/
 
     fun logoutCurrentUser() {
         authRepository.signOutCurrentUser()

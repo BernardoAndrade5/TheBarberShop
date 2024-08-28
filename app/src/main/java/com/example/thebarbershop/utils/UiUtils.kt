@@ -5,6 +5,8 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.icu.util.Calendar
 import android.widget.EditText
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 object UiUtils {
 
@@ -43,5 +45,17 @@ object UiUtils {
             true
         )
         timePickerDialog.show()
+    }
+
+    fun getCurrentDate() : String{
+        val currentDate = java.util.Calendar.getInstance()
+        val year = currentDate.get(java.util.Calendar.YEAR)
+        val month = currentDate.get(java.util.Calendar.MONTH)
+        val day = currentDate.get(java.util.Calendar.DAY_OF_MONTH)
+        val calendar = java.util.Calendar.getInstance()
+        calendar.set(year, month, day)
+        val dateFormat = SimpleDateFormat("EEEE, d 'de' MMM yyyy", Locale("pt", "PT"))
+        val formattedDate = dateFormat.format(calendar.time)
+        return formattedDate
     }
 }

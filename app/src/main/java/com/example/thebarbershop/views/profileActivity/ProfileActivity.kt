@@ -59,10 +59,6 @@ class ProfileActivity : BaseActivity() {
         }*/
     }
 
-    override fun onResume() {
-        super.onResume()
-        highlightCurrentMenuItem()
-    }
     override fun highlightCurrentMenuItem() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.selectedItemId = R.id.navigation_user
