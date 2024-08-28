@@ -3,4 +3,8 @@
     <style name="SmallCornerShape">
         <item name="cornerSize">2dp</item>
     </style>
+    <style name="CustomButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:background">@color/dark_grey</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>
