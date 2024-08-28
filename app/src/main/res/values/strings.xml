@@ -4,4 +4,12 @@
     <string name="placeholder">Placeholder</string>
     <string name="notifications">Notifications</string>
     <string name="pr_ximo_de_si">Próximo de si</string>
+    <string name="pesquisar">Pesquisar…</string>
+    <string name="cidade">Cidade</string>
+    <string name="Proximas">Próximas</string>
+    <string name="Nome">Nome</string>
+    <string name="EncontreEstabelecimento">Encontre um estabelecimento</string>
+    <string name="PesquiseNomeOuCidade">Pesquise pelo nome/cidade do estabelecimento</string>
+    <string name="pesquise_pelo_nome">Pesquise pelo nome</string>
+
 </resources>

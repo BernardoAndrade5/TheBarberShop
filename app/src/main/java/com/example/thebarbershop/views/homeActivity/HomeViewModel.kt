@@ -24,14 +24,33 @@ constructor(
     private val businessRepository: BusinessRepository,
     private val authRepository: AuthRepository
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(HomeUiState())
+    private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState
 
     init {
-        getDataBusinessandAppoitments()
+        loadData()
     }
 
-    private fun loadAppointmentsFlow(): Flow<HomeUiState> = flow {
+    private fun loadData(){
+        viewModelScope.launch {
+            _uiState.value = HomeUiState.Loading
+            try {
+                val appointments = appointmentsRepository.fetchAppoitmentsFromFirestore()
+                val business = businessRepository.fetchBusinessFromFirestore()
+                val isAuthenticated = authRepository.isUserAuthenticated()
+                val userEmail = authRepository.getCurrentUserEmail().toString()
+                _uiState.value = HomeUiState.Success(
+                    appointments,
+                    business,
+                    userEmail,
+                    isAuthenticated
+                )
+            } catch (e: Exception) {
+                _uiState.value = HomeUiState.Error(e.message.toString())
+            }
+        }
+    }
+    /*private fun loadAppointmentsFlow(): Flow<HomeUiState> = flow {
         emit(HomeUiState(isLoading = true))
         try {
             val appointments = appointmentsRepository.fetchAppoitmentsFromFirestore()
@@ -89,15 +108,11 @@ constructor(
                 _uiState.value = combinedState
             }
         }
-    }
+    }*/
 
     fun logoutCurrentUser() {
         authRepository.signOutCurrentUser()
+        loadData()
     }
-
-    fun getUserEmail(){
-        authRepository.getCurrentUserEmail()
-    }
-
 }
 
