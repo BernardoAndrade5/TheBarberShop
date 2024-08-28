@@ -64,7 +64,9 @@ class SearchActivity : BaseActivity() {
         }
     }
 
-    override fun onHomeSelected() {
+    override fun highlightCurrentMenuItem() {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.selectedItemId = R.id.navigation_search
     }
 
     override fun onResume() {
