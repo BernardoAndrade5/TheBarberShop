@@ -39,6 +39,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 R.id.navigation_search -> {
                     if(!isCurrentActivity(SearchActivity::class.java)){
                         navigationHandler.navigateToSearch()
+                        overridePendingTransition(0,0)
                     }
                     true
                 }
@@ -46,6 +47,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 R.id.navigation_appointments -> {
                     if(!isCurrentActivity(AppointmentActivity::class.java)){
                         navigationHandler.navigateToAppoitnments()
+                        overridePendingTransition(0,0)
                     }
                     true
                 }
