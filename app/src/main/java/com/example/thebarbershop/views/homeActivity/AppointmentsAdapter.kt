@@ -26,7 +26,7 @@ class AppointmentsAdapter(private val appointmentsList: MutableList<Appointment>
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val appointment = appointmentsList[position]
-        holder.barberName.text = appointment.barber
+        holder.barberName.text = appointment.id
         // Bind other data here as needed
     }
 
