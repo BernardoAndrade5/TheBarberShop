@@ -1,16 +1,15 @@
 package com.example.thebarbershop.views.profileActivity
 
-import android.provider.ContactsContract.Profile
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.thebarbershop.databinding.AppointmentsListItemBinding
 import com.example.thebarbershop.databinding.ProfileRvListItemBinding
-import com.example.thebarbershop.models.Appointment
 import com.example.thebarbershop.models.ProfileOption
+import com.example.thebarbershop.views.myaccountActivity.MyAccountActivity
 
 class ProfileOptionsListAdapter (private val profileOptionsList: List<ProfileOption>):
     RecyclerView.Adapter<ProfileOptionsListAdapter.ViewHolder>() {
@@ -43,6 +42,11 @@ class ProfileOptionsListAdapter (private val profileOptionsList: List<ProfileOpt
             )
 
             holder.buttonIcon.setImageResource(resourceId)
+            holder.buttonName.setOnClickListener {
+                val context = holder.itemView.context
+                val intent =Intent(context, MyAccountActivity::class.java)
+                startActivity(context, intent, null);
+            }
         }
 
         override fun getItemCount(): Int {
