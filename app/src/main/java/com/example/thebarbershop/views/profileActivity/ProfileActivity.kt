@@ -42,7 +42,6 @@ class ProfileActivity : BaseActivity() {
         binding.profileRv.layoutManager = LinearLayoutManager(this)
         binding.profileRv.adapter = profileOptionsAdapter
 
-
         /*lifecycleScope.launch {
             homeViewModel.uiState.collect { uiState ->
                 if (uiState.isLoading) {

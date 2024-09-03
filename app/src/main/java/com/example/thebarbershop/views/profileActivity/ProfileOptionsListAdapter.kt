@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.thebarbershop.databinding.ProfileRvListItemBinding
 import com.example.thebarbershop.models.ProfileOption
+import com.example.thebarbershop.views.changePasswordActivity.ChangePasswordActivity
 import com.example.thebarbershop.views.myaccountActivity.MyAccountActivity
 
 class ProfileOptionsListAdapter (private val profileOptionsList: List<ProfileOption>):
@@ -43,9 +44,16 @@ class ProfileOptionsListAdapter (private val profileOptionsList: List<ProfileOpt
 
             holder.buttonIcon.setImageResource(resourceId)
             holder.buttonName.setOnClickListener {
-                val context = holder.itemView.context
-                val intent =Intent(context, MyAccountActivity::class.java)
-                startActivity(context, intent, null);
+                if(position == 0){
+                    val context = holder.itemView.context
+                    val intent =Intent(context, MyAccountActivity::class.java)
+                    startActivity(context, intent, null);
+                }
+                else if(position == profileOptionsList.size - 1){
+                    val context = holder.itemView.context
+                    val intent =Intent(context, ChangePasswordActivity::class.java)
+                    startActivity(context, intent, null);
+                }
             }
         }
 

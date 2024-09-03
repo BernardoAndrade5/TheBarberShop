@@ -48,6 +48,8 @@
             android:exported="true">
         </activity>
         <activity android:name=".views.myaccountActivity.MyAccountActivity" android:exported="true"/>
+        <activity android:name=".views.changePasswordActivity.ChangePasswordActivity" android:exported="true"/>
+
     </application>
 
 </manifest>
