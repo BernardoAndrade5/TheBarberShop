@@ -11,6 +11,7 @@ import com.example.thebarbershop.databinding.ProfileRvListItemBinding
 import com.example.thebarbershop.models.ProfileOption
 import com.example.thebarbershop.views.changePasswordActivity.ChangePasswordActivity
 import com.example.thebarbershop.views.myaccountActivity.MyAccountActivity
+import com.example.thebarbershop.views.myaddressActivity.MyAddressActivity
 
 class ProfileOptionsListAdapter (private val profileOptionsList: List<ProfileOption>):
     RecyclerView.Adapter<ProfileOptionsListAdapter.ViewHolder>() {
@@ -44,16 +45,24 @@ class ProfileOptionsListAdapter (private val profileOptionsList: List<ProfileOpt
 
             holder.buttonIcon.setImageResource(resourceId)
             holder.buttonName.setOnClickListener {
-                if(position == 0){
-                    val context = holder.itemView.context
-                    val intent =Intent(context, MyAccountActivity::class.java)
-                    startActivity(context, intent, null);
+                when (position) {
+                    0 -> {
+                        val context = holder.itemView.context
+                        val intent =Intent(context, MyAccountActivity::class.java)
+                        startActivity(context, intent, null);
+                    }
+                    2 -> {
+                        val context = holder.itemView.context
+                        val intent =Intent(context, MyAddressActivity::class.java)
+                        startActivity(context, intent, null);
+                    }
+                    profileOptionsList.size - 1 -> {
+                        val context = holder.itemView.context
+                        val intent =Intent(context, ChangePasswordActivity::class.java)
+                        startActivity(context, intent, null);
+                    }
                 }
-                else if(position == profileOptionsList.size - 1){
-                    val context = holder.itemView.context
-                    val intent =Intent(context, ChangePasswordActivity::class.java)
-                    startActivity(context, intent, null);
-                }
+
             }
         }
 
