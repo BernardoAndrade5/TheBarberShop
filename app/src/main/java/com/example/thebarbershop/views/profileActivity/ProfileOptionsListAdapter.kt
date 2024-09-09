@@ -12,6 +12,7 @@ import com.example.thebarbershop.models.ProfileOption
 import com.example.thebarbershop.views.changePasswordActivity.ChangePasswordActivity
 import com.example.thebarbershop.views.myaccountActivity.MyAccountActivity
 import com.example.thebarbershop.views.myaddressActivity.MyAddressActivity
+import com.example.thebarbershop.views.mysubscriptionsActivity.MySubscriptionsActivity
 
 class ProfileOptionsListAdapter (private val profileOptionsList: List<ProfileOption>):
     RecyclerView.Adapter<ProfileOptionsListAdapter.ViewHolder>() {
@@ -46,17 +47,22 @@ class ProfileOptionsListAdapter (private val profileOptionsList: List<ProfileOpt
             holder.buttonIcon.setImageResource(resourceId)
             holder.buttonName.setOnClickListener {
                 when (position) {
-                    0 -> {
+                    0 -> {//minha conta
                         val context = holder.itemView.context
                         val intent =Intent(context, MyAccountActivity::class.java)
                         startActivity(context, intent, null);
                     }
-                    2 -> {
+                    2 -> {//o meu endereço
                         val context = holder.itemView.context
                         val intent =Intent(context, MyAddressActivity::class.java)
                         startActivity(context, intent, null);
                     }
-                    profileOptionsList.size - 1 -> {
+                    5 -> {//minhas inscrições
+                        val context = holder.itemView.context
+                        val intent =Intent(context, MySubscriptionsActivity::class.java)
+                        startActivity(context, intent, null);
+                    }
+                    profileOptionsList.size - 1 -> {//mudar palavra-passe
                         val context = holder.itemView.context
                         val intent =Intent(context, ChangePasswordActivity::class.java)
                         startActivity(context, intent, null);

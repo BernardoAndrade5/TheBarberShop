@@ -50,6 +50,7 @@
         <activity android:name=".views.myaccountActivity.MyAccountActivity" android:exported="true"/>
         <activity android:name=".views.changePasswordActivity.ChangePasswordActivity" android:exported="true"/>
         <activity android:name=".views.myaddressActivity.MyAddressActivity" android:exported="true"/>
+        <activity android:name=".views.mysubscriptionsActivity.MySubscriptionsActivity" android:exported="true"/>
 
     </application>
 

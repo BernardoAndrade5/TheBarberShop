@@ -10,6 +10,7 @@ class ProfileOptionsProvider {
             ProfileOption("ic_map", "Endereços", "Altere o seu endereço"),
             ProfileOption("ic_heart_fill", "Favoritos", "Os meus favoritos"),
             ProfileOption("ic_credit_card", "Os meus cartões", "Gira os seus cartões"),
+            ProfileOption("ic_person", "Subscrições", "Acompanhe as suas subscrições"),//mudar o icon depois
             ProfileOption("ic_lock", "Segurança", "Veja as suas opções de segurança"),
             // Add more ProfileOption objects as needed
         )
