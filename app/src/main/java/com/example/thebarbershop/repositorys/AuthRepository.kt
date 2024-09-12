@@ -19,6 +19,10 @@ constructor(
         return firebaseAuth.currentUser?.email
     }
 
+    fun getCurrentUserId() : String?{
+        return firebaseAuth.currentUser?.uid
+    }
+
     fun signOutCurrentUser() {
         firebaseAuth.signOut()
     }
@@ -27,6 +31,18 @@ constructor(
         return withContext(Dispatchers.IO) {
             try {
                 firebaseAuth.signInWithEmailAndPassword(email, password).await()
+                return@withContext true // Explicit return within the lambda
+            } catch (e: Exception) {
+                Log.d("error", e.message.toString())
+                return@withContext false // Explicit return within the lambda
+            }
+        }
+    }
+
+    suspend fun registerWithEmailAndPassword(email: String, password: String): Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                firebaseAuth.createUserWithEmailAndPassword(email, password).await()
                 return@withContext true // Explicit return within the lambda
             } catch (e: Exception) {
                 Log.d("error", e.message.toString())

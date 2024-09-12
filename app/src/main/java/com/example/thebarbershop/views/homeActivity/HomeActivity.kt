@@ -90,7 +90,9 @@ class HomeActivity : BaseActivity() {
         }
 
         binding.newReservationButton.setOnClickListener{
+            val userId = homeViewModel.getCurrentUserId()
             val intent = Intent(this, NewReservationActivity::class.java)
+            intent.putExtra("USER_ID", userId)
             startActivity(intent)
         }
 

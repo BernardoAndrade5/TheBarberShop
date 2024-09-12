@@ -62,5 +62,9 @@ constructor(
         authRepository.signOutCurrentUser()
         loadData()
     }
+
+    fun getCurrentUserId() : String?{
+        return authRepository.getCurrentUserId()
+    }
 }
 

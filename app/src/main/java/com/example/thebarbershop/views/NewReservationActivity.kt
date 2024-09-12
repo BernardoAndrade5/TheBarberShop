@@ -20,6 +20,8 @@ class NewReservationActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        val userId = intent.getStringExtra("USER_ID") ?: ""
+
         binding.apply {
             dateInput.setOnClickListener{
                 UiUtils.showDatePickerDialog(this@NewReservationActivity, dateInput)
@@ -34,7 +36,8 @@ class NewReservationActivity : AppCompatActivity() {
                     barberInput.text.toString(),
                     dateInput.text.toString(),
                     timeInput.text.toString(),
-                    reservationNameInput.text.toString()
+                    reservationNameInput.text.toString(),
+                    userId
                 )
                 lifecycleScope.launch {
                     firebase.addApointmentToFirestore(newAppointment)

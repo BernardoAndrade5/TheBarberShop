@@ -1,7 +1,5 @@
 package com.example.thebarbershop.uiStates
 
-import com.example.thebarbershop.views.loginActivity.LoginViewModel
-
 sealed class LoginUiState{
     data object Idle : LoginUiState()
     data object Loading : LoginUiState()
