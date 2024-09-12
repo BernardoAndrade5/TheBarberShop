@@ -47,6 +47,7 @@
             android:name=".views.registerActivity.RegisterActivity"
             android:exported="true">
         </activity>
+        <activity android:name=".views.myaccountActivity.MyAccountActivity" android:exported="true"/>
     </application>
 
 </manifest>

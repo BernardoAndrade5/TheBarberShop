@@ -17,6 +17,7 @@ import com.example.thebarbershop.views.NewReservationActivity
 import com.example.thebarbershop.views.homeActivity.AppointmentsAdapter
 import com.example.thebarbershop.views.homeActivity.HomeViewModel
 import com.example.thebarbershop.views.homeActivity.NextToYouAdapter
+import com.example.thebarbershop.views.searchActivity.SearchActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -39,7 +40,6 @@ class ProfileActivity : BaseActivity() {
         highlightCurrentMenuItem()
 
         val profileOptionsList = profileOptionsProvider.getProfileOptions()
-
         profileOptionsAdapter = ProfileOptionsListAdapter(profileOptionsList)
         binding.profileRv.layoutManager = LinearLayoutManager(this)
         binding.profileRv.adapter = profileOptionsAdapter
@@ -57,6 +57,10 @@ class ProfileActivity : BaseActivity() {
                 }
             }
         }*/
+
+
+        // Set click listener on the adapter
+
     }
 
     override fun highlightCurrentMenuItem() {
