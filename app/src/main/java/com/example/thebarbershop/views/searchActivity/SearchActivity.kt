@@ -29,7 +29,6 @@ class SearchActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Set content view using binding
         binding = ActivitySearchBinding.inflate(layoutInflater)
         val view = binding.root
 
