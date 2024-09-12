@@ -16,11 +16,15 @@ import com.example.thebarbershop.databinding.ActivityHomeBinding
 import com.example.thebarbershop.databinding.BottomNavigationBarBinding
 import com.example.thebarbershop.repositorys.AppointmentRepository
 import com.example.thebarbershop.repositorys.BusinessRepository
+import com.example.thebarbershop.uiStates.BaseUiState
+import com.example.thebarbershop.uiStates.HomeUiState
+import com.example.thebarbershop.utils.UiUtils
 import com.example.thebarbershop.views.BaseActivity
 import com.example.thebarbershop.views.NavigationHandler
 import com.example.thebarbershop.views.NewReservationActivity
 import com.example.thebarbershop.views.loginActivity.LoginActivity
 import com.example.thebarbershop.views.registerActivity.RegisterActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.example.thebarbershop.views.searchActivity.SearchActivity
 import com.google.api.Distribution.BucketOptions.Linear
 import com.google.firebase.auth.FirebaseAuth
@@ -37,10 +41,6 @@ class HomeActivity : BaseActivity() {
     private lateinit var nexToYouBusinessAdapter : NextToYouAdapter
     private val homeViewModel: HomeViewModel by viewModels()
 
-    companion object{
-        lateinit var auth : FirebaseAuth
-    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,26 +48,15 @@ class HomeActivity : BaseActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         val view = binding.root
         val contentFrame = findViewById<FrameLayout>(R.id.container)
-        val currentDate = Calendar.getInstance()
-        val year = currentDate.get(Calendar.YEAR)
-        val month = currentDate.get(Calendar.MONTH) + 1
-        val day = currentDate.get(Calendar.DAY_OF_MONTH)
         contentFrame.addView(view)
 
-        handleSignInSignOutBtn()
+        highlightCurrentMenuItem()
 
-        val calendar = Calendar.getInstance()
-        calendar.set(year, month, day)
-
-        val dateFormat = SimpleDateFormat("EEEE, d 'de' MMM yyyy", Locale("pt", "PT"))
-        val formattedDate = dateFormat.format(calendar.time)
-
-        binding.dateTv.text = formattedDate
+        binding.dateTv.text = UiUtils.getCurrentDate()
 
         appointmentAdapter = AppointmentsAdapter(mutableListOf())
         binding.appointmentsRv.layoutManager = LinearLayoutManager(this)
         binding.appointmentsRv.adapter = appointmentAdapter
-        binding.dateTv.text = formattedDate;
         nexToYouBusinessAdapter = NextToYouAdapter(this, mutableListOf())
         binding.nextToYouRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.nextToYouRv.adapter = nexToYouBusinessAdapter
@@ -75,27 +64,40 @@ class HomeActivity : BaseActivity() {
 
         lifecycleScope.launch {
             homeViewModel.uiState.collect { uiState ->
-                if (uiState.isLoading) {
-                    //TODO : Show loading indicator
-                } else if (uiState.errorMessage != null) {
-                    //TODO : Show error message
-                }else{
-                    appointmentAdapter.updateData(uiState.appointments)
-                    nexToYouBusinessAdapter.updateData(uiState.nextToYouBusiness)
-                    binding.userNameTv.text = uiState.userEmail
+                when (uiState) {
+                    is BaseUiState.Loading ->{
+                        //TODO : Show loading indicator
+                    }
+                    is BaseUiState.Success -> {
+                        //TODO : Hide loading indicator
+                        val homeData = uiState.data
+                        appointmentAdapter.updateData(homeData.appointment)
+                        nexToYouBusinessAdapter.updateData(homeData.nexToYouBusiness)
+                        binding.userNameTv.text = homeData.userEmail
+                        binding.signInBtn.visibility = if (homeData.isAuthenticated) View.GONE else View.VISIBLE
+                        binding.signOutBtn.visibility = if (homeData.isAuthenticated) View.VISIBLE else View.GONE
+                    }
+
+                    is BaseUiState.Error -> {
+                        // Hide loading indicator
+                        //TODO : Hide loading indicator
+
+                        // Show error message
+                        // TODO: Implement proper error handling
+                    }
                 }
             }
         }
 
         binding.newReservationButton.setOnClickListener{
+            val userId = homeViewModel.getCurrentUserId()
             val intent = Intent(this, NewReservationActivity::class.java)
+            intent.putExtra("USER_ID", userId)
             startActivity(intent)
         }
 
         binding.signOutBtn.setOnClickListener {
             homeViewModel.logoutCurrentUser()
-            binding.userNameTv.text = updateData()
-            handleSignInSignOutBtn()
         }
 
         binding.signInBtn.setOnClickListener {
@@ -108,30 +110,8 @@ class HomeActivity : BaseActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding.userNameTv.text = updateData()
-        handleSignInSignOutBtn()
-    }
-
-    private fun updateData() : String{
-        return auth.currentUser?.email.toString()
-    }
-
-    private fun handleSignInSignOutBtn(){
-        auth = FirebaseAuth.getInstance()
-
-        if (auth.currentUser == null){
-            binding.signInBtn.visibility = View.VISIBLE
-            binding.signOutBtn.visibility = View.GONE
-        }else{
-            binding.signInBtn.visibility = View.GONE
-            binding.signOutBtn.visibility = View.VISIBLE
-        }
-    }
-
-
-    override fun onHomeSelected() {
-        TODO("Not yet implemented")
+    override fun highlightCurrentMenuItem() {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.selectedItemId = R.id.navigation_home
     }
 }

@@ -10,17 +10,12 @@ class BusinessRepository @Inject
 constructor(private val firebaseUtils : FirebaseUtils) {
     private val businessList = mutableListOf<Business>()
 
-    suspend fun addAppoitment(business: Business):Boolean{
+    suspend fun addBusinessToFirestore(business: Business):Boolean{
         val result = firebaseUtils.addBusineesToFirestore(business)
         if(result){
             businessList.add(business)
         }
         return result
-    }
-
-    fun getAllBusiness() : List<Business>{
-        Log.d("MYTAG", businessList.toList().toString())
-        return businessList.toList()
     }
 
     suspend fun fetchBusinessFromFirestore() : List<Business>{

@@ -3,20 +3,25 @@ package com.example.thebarbershop.views.registerActivity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.thebarbershop.databinding.ActivityRegisterBinding
 import com.example.thebarbershop.repositorys.AuthRepository
+import com.example.thebarbershop.uiStates.RegisterUiState
 import com.example.thebarbershop.views.homeActivity.HomeActivity
 import com.example.thebarbershop.views.loginActivity.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import org.checkerframework.common.returnsreceiver.qual.This
 
 @AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding : ActivityRegisterBinding
-    private val auth = Firebase.auth
+    private val registerViewModel : RegisterViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,14 +32,7 @@ class RegisterActivity : AppCompatActivity() {
             val email = binding.emailInput.text.toString()
             val password = binding.passwordInput.text.toString()
             if(email.isNotEmpty() && password.isNotEmpty()){
-                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{
-                    if(it.isSuccessful){
-                        startActivity(Intent(this, LoginActivity::class.java))
-                        finish()
-                    }
-                }.addOnFailureListener{
-                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG).show()
-                }
+                registerViewModel.register(email, password)
             }
         }
 
@@ -43,6 +41,22 @@ class RegisterActivity : AppCompatActivity() {
             finish()
         }
 
-
+        lifecycleScope.launch {
+            registerViewModel.uiState.collect(){state ->
+                when(state){
+                    is RegisterUiState.Idle -> {}
+                    is RegisterUiState.Loading -> {
+                        //TODO : Show Loading indicator
+                    }
+                    is RegisterUiState.Success -> {
+                        startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                        finish()
+                    }
+                    is RegisterUiState.Error -> {
+                        Toast.makeText(this@RegisterActivity, "Invalid Credentials", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 }

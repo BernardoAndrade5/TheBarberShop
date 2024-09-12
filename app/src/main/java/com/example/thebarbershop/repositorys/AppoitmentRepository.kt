@@ -23,9 +23,10 @@ constructor(private val firebaseUtils : FirebaseUtils) {
     }
 
     suspend fun fetchAppoitmentsFromFirestore() : List<Appointment>{
-        val fetchedAppoitments = firebaseUtils.getApointmentsFromFirestore()
+        val fetchedAppoitments = firebaseUtils.getAppointmentsFromFirestore()
         appointments.clear()
         appointments.addAll(fetchedAppoitments)
+        Log.d("MYTAG", appointments.toList().toString())
         return appointments.toList()
     }
 }

@@ -18,6 +18,7 @@ import com.example.thebarbershop.views.homeActivity.AppointmentsAdapter
 import com.example.thebarbershop.views.homeActivity.HomeViewModel
 import com.example.thebarbershop.views.homeActivity.NextToYouAdapter
 import com.example.thebarbershop.views.searchActivity.SearchActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -36,6 +37,7 @@ class ProfileActivity : BaseActivity() {
         val view = binding.root
         val contentFrame = findViewById<FrameLayout>(R.id.container)
         contentFrame.addView(view)
+        highlightCurrentMenuItem()
 
         val profileOptionsList = profileOptionsProvider.getProfileOptions()
         profileOptionsAdapter = ProfileOptionsListAdapter(profileOptionsList)
@@ -61,9 +63,8 @@ class ProfileActivity : BaseActivity() {
 
     }
 
-
-
-    override fun onHomeSelected() {
-        TODO("Not yet implemented")
+    override fun highlightCurrentMenuItem() {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.selectedItemId = R.id.navigation_user
     }
 }
