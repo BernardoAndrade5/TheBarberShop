@@ -13,6 +13,7 @@ import com.example.thebarbershop.views.changePasswordActivity.ChangePasswordActi
 import com.example.thebarbershop.views.myaccountActivity.MyAccountActivity
 import com.example.thebarbershop.views.myaddressActivity.MyAddressActivity
 import com.example.thebarbershop.views.myappointmentsActivity.MyAppointmentsActivity
+import com.example.thebarbershop.views.myexpensesActivity.MyExpensesActivity
 import com.example.thebarbershop.views.mysubscriptionsActivity.MySubscriptionsActivity
 
 class ProfileOptionsListAdapter (private val profileOptionsList: List<ProfileOption>):
@@ -66,6 +67,11 @@ class ProfileOptionsListAdapter (private val profileOptionsList: List<ProfileOpt
                     6 -> {//histórico de marcações
                         val context = holder.itemView.context
                         val intent =Intent(context, MyAppointmentsActivity::class.java)
+                        startActivity(context, intent, null);
+                    }
+                    7 -> {//despesas
+                        val context = holder.itemView.context
+                        val intent =Intent(context, MyExpensesActivity::class.java)
                         startActivity(context, intent, null);
                     }
                     profileOptionsList.size - 1 -> {//mudar palavra-passe

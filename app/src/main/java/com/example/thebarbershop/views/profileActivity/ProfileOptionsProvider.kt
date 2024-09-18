@@ -12,6 +12,7 @@ class ProfileOptionsProvider {
             ProfileOption("ic_credit_card", "Os meus cartões", "Gira os seus cartões"),
             ProfileOption("ic_person", "Subscrições", "Acompanhe as suas subscrições"),//mudar o icon depois
             ProfileOption("ic_historic", "Histórico", "Veja o histórico de marcações."),
+            ProfileOption("ic_expenses", "Despesas", "Acompanhe as suas despesas."),
             ProfileOption("ic_lock", "Segurança", "Veja as suas opções de segurança"),
             // Add more ProfileOption objects as needed
         )
