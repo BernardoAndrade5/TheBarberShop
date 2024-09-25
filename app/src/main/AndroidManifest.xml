@@ -47,12 +47,13 @@
             android:name=".views.registerActivity.RegisterActivity"
             android:exported="true">
         </activity>
-        <activity android:name=".views.myaccountActivity.MyAccountActivity" android:exported="true"/>
-        <activity android:name=".views.changePasswordActivity.ChangePasswordActivity" android:exported="true"/>
-        <activity android:name=".views.myaddressActivity.MyAddressActivity" android:exported="true"/>
-        <activity android:name=".views.mysubscriptionsActivity.MySubscriptionsActivity" android:exported="true"/>
-        <activity android:name=".views.myappointmentsActivity.MyAppointmentsActivity" android:exported="true"/>
-        <activity android:name=".views.myexpensesActivity.MyExpensesActivity" android:exported="true"/>
+        <activity android:name=".views.profileActivity.profileOptions.myaccountActivity.MyAccountActivity" android:exported="true"/>
+        <activity android:name=".views.profileActivity.profileOptions.changePasswordActivity.ChangePasswordActivity" android:exported="true"/>
+        <activity android:name=".views.profileActivity.profileOptions.myaddressActivity.MyAddressActivity" android:exported="true"/>
+        <activity android:name=".views.profileActivity.profileOptions.mysubscriptionsActivity.MySubscriptionsActivity" android:exported="true"/>
+        <activity android:name=".views.profileActivity.profileOptions.myappointmentsActivity.MyAppointmentsActivity" android:exported="true"/>
+        <activity android:name=".views.profileActivity.profileOptions.myexpensesActivity.MyExpensesActivity" android:exported="true"/>
+        <activity android:name=".views.profileActivity.profileOptions.mypackagesActivity.MyPackagesActivity" android:exported="true"/>
 
     </application>
 

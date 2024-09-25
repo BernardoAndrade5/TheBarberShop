@@ -9,12 +9,13 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.thebarbershop.databinding.ProfileRvListItemBinding
 import com.example.thebarbershop.models.ProfileOption
-import com.example.thebarbershop.views.changePasswordActivity.ChangePasswordActivity
-import com.example.thebarbershop.views.myaccountActivity.MyAccountActivity
-import com.example.thebarbershop.views.myaddressActivity.MyAddressActivity
-import com.example.thebarbershop.views.myappointmentsActivity.MyAppointmentsActivity
-import com.example.thebarbershop.views.myexpensesActivity.MyExpensesActivity
-import com.example.thebarbershop.views.mysubscriptionsActivity.MySubscriptionsActivity
+import com.example.thebarbershop.views.profileActivity.profileOptions.changePasswordActivity.ChangePasswordActivity
+import com.example.thebarbershop.views.profileActivity.profileOptions.myaccountActivity.MyAccountActivity
+import com.example.thebarbershop.views.profileActivity.profileOptions.myaddressActivity.MyAddressActivity
+import com.example.thebarbershop.views.profileActivity.profileOptions.myappointmentsActivity.MyAppointmentsActivity
+import com.example.thebarbershop.views.profileActivity.profileOptions.myexpensesActivity.MyExpensesActivity
+import com.example.thebarbershop.views.profileActivity.profileOptions.mypackagesActivity.MyPackagesActivity
+import com.example.thebarbershop.views.profileActivity.profileOptions.mysubscriptionsActivity.MySubscriptionsActivity
 
 class ProfileOptionsListAdapter (private val profileOptionsList: List<ProfileOption>):
     RecyclerView.Adapter<ProfileOptionsListAdapter.ViewHolder>() {
@@ -64,12 +65,17 @@ class ProfileOptionsListAdapter (private val profileOptionsList: List<ProfileOpt
                         val intent =Intent(context, MySubscriptionsActivity::class.java)
                         startActivity(context, intent, null);
                     }
-                    6 -> {//histórico de marcações
+                    6 -> {//pacotes
+                        val context = holder.itemView.context
+                        val intent =Intent(context, MyPackagesActivity::class.java)
+                        startActivity(context, intent, null);
+                    }
+                    7 -> {//histórico de marcações
                         val context = holder.itemView.context
                         val intent =Intent(context, MyAppointmentsActivity::class.java)
                         startActivity(context, intent, null);
                     }
-                    7 -> {//despesas
+                    8 -> {//despesas
                         val context = holder.itemView.context
                         val intent =Intent(context, MyExpensesActivity::class.java)
                         startActivity(context, intent, null);

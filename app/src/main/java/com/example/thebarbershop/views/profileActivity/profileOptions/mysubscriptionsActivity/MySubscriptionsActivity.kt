@@ -1,4 +1,4 @@
-package com.example.thebarbershop.views.mysubscriptionsActivity
+package com.example.thebarbershop.views.profileActivity.profileOptions.mysubscriptionsActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity

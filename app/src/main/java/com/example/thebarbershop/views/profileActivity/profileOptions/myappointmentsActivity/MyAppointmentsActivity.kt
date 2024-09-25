@@ -1,4 +1,4 @@
-package com.example.thebarbershop.views.myappointmentsActivity
+package com.example.thebarbershop.views.profileActivity.profileOptions.myappointmentsActivity
 
 import android.os.Build
 import android.os.Bundle
