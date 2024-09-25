@@ -14,6 +14,7 @@ import com.example.thebarbershop.views.profileActivity.profileOptions.myaccountA
 import com.example.thebarbershop.views.profileActivity.profileOptions.myaddressActivity.MyAddressActivity
 import com.example.thebarbershop.views.profileActivity.profileOptions.myappointmentsActivity.MyAppointmentsActivity
 import com.example.thebarbershop.views.profileActivity.profileOptions.myexpensesActivity.MyExpensesActivity
+import com.example.thebarbershop.views.profileActivity.profileOptions.myfavoritesActivity.MyFavoritesActivity
 import com.example.thebarbershop.views.profileActivity.profileOptions.mypackagesActivity.MyPackagesActivity
 import com.example.thebarbershop.views.profileActivity.profileOptions.mysubscriptionsActivity.MySubscriptionsActivity
 
@@ -58,6 +59,11 @@ class ProfileOptionsListAdapter (private val profileOptionsList: List<ProfileOpt
                     2 -> {//o meu endereço
                         val context = holder.itemView.context
                         val intent =Intent(context, MyAddressActivity::class.java)
+                        startActivity(context, intent, null);
+                    }
+                    3 -> {//favoritos
+                        val context = holder.itemView.context
+                        val intent =Intent(context, MyFavoritesActivity::class.java)
                         startActivity(context, intent, null);
                     }
                     5 -> {//minhas inscrições

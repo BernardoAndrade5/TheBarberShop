@@ -54,6 +54,7 @@
         <activity android:name=".views.profileActivity.profileOptions.myappointmentsActivity.MyAppointmentsActivity" android:exported="true"/>
         <activity android:name=".views.profileActivity.profileOptions.myexpensesActivity.MyExpensesActivity" android:exported="true"/>
         <activity android:name=".views.profileActivity.profileOptions.mypackagesActivity.MyPackagesActivity" android:exported="true"/>
+        <activity android:name=".views.profileActivity.profileOptions.myfavoritesActivity.MyFavoritesActivity" android:exported="true"/>
 
     </application>
 
