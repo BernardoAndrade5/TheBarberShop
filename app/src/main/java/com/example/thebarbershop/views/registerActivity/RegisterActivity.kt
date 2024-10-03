@@ -29,10 +29,14 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.submitBtn.setOnClickListener {
+            val firstName = binding.firstNameInput.text.toString()
+            val lastName = binding.lastNameInput.text.toString()
+            val age = binding.ageInput.text.toString()
+            val phoneNumber = binding.phoneNumberInput.text.toString()
             val email = binding.emailInput.text.toString()
             val password = binding.passwordInput.text.toString()
             if(email.isNotEmpty() && password.isNotEmpty()){
-                registerViewModel.register(email, password)
+                registerViewModel.register(email, password, firstName, lastName, age, phoneNumber)
             }
         }
 

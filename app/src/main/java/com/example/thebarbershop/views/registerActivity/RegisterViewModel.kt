@@ -2,6 +2,7 @@ package com.example.thebarbershop.views.registerActivity
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.thebarbershop.models.User
 import com.example.thebarbershop.repositorys.AuthRepository
 import com.example.thebarbershop.uiStates.BaseUiState
 import com.example.thebarbershop.uiStates.LoginUiState
@@ -22,9 +23,15 @@ constructor(
     private val _uiState = MutableStateFlow<RegisterUiState>(RegisterUiState.Idle)
     val uiState: StateFlow<RegisterUiState> = _uiState.asStateFlow()
 
-    fun register (email : String, password: String){
+    fun register (email : String, password: String, firstName : String, lastName : String, phoneNumber : String, age : String){
         viewModelScope.launch {
-            val registerSuccessfull = authRepository.registerWithEmailAndPassword(email, password)
+            val newUser = User(
+                firstName = firstName,
+                lastName = lastName,
+                phoneNumber = phoneNumber,
+                age = age
+            )
+            val registerSuccessfull = authRepository.registerWithEmailAndPassword(email, password, newUser)
             if (registerSuccessfull){
                 _uiState.value = RegisterUiState.Success(Unit)
             }else{

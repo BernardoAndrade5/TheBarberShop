@@ -21,20 +21,6 @@ class FirebaseUtils @Inject
 constructor() {
     private val db = Firebase.firestore
 
-    suspend fun addUserToFirestore(user: User): Boolean {
-        return try {
-            val userMap = hashMapOf(
-                "firstName" to user.firstName,
-                "lastName" to user.lastName,
-                "age" to user.age
-            )
-            db.collection("users").add(userMap).await()
-            true
-        } catch (e: Exception) {
-            false
-        }
-    }
-
     suspend fun addBusineesToFirestore(business: Business): Boolean {
         return try {
             val businessMap = hashMapOf(
@@ -144,6 +130,21 @@ constructor() {
             result.documents.mapNotNull { it.toObject(BarberShop::class.java) }
         }catch (e:Exception){
             emptyList()
+        }
+    }
+
+    suspend fun addUserToFirestore(user : User) : Boolean{
+        return try {
+            val userMap = hashMapOf(
+                "firstname" to user.firstName,
+                "lastname" to user.lastName,
+                "age" to user.age,
+                "phoneNumber" to user.phoneNumber
+            )
+            db.collection("users").add(userMap).await()
+            true
+        }catch (e : Exception){
+            false
         }
     }
 }
