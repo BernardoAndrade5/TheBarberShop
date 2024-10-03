@@ -1,17 +1,18 @@
 package com.example.thebarbershop.data
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.thebarbershop.models.Appointment
 import com.example.thebarbershop.models.BarberShop
 import com.example.thebarbershop.models.Business
 import com.example.thebarbershop.models.User
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -75,10 +76,15 @@ constructor() {
         }
     }
 
-    suspend fun getApointmentsFromFirestore(): List<Appointment> {
+    suspend fun getAppointmentsFromFirestore(): List<Appointment> {
         return try {
-            val result = db.collection("apointments").get().await()
-            result.documents.mapNotNull { it.toObject(Appointment::class.java) }
+            val appointmentsCollection = db.collection("apointments")
+            val snapshot = withContext(Dispatchers.IO) { appointmentsCollection.get().await() } // Use await()
+            snapshot.documents.map { document ->
+                val appointment = document.toObject(Appointment::class.java)!!
+                appointment.id = document.id
+                appointment
+            }
         } catch (e: Exception) {
             emptyList()
         }
@@ -90,7 +96,8 @@ constructor() {
                 "barber" to data.barber,
                 "date" to data.date,
                 "time" to data.time,
-                "reservationName" to data.reservationName
+                "reservationName" to data.reservationName,
+                "user_id" to data.userId
             )
             db.collection("apointments").add(apointmentMap).await()
             true
@@ -102,7 +109,7 @@ constructor() {
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun clearPastApointmentsFromFirestore(): Boolean {
         return try {
-            val apointmentList = getApointmentsFromFirestore()
+            val apointmentList = getAppointmentsFromFirestore()
             val pastApointments = apointmentList.filter {
                 val apointmentDate = LocalDate.parse(it.date, DateTimeFormatter.ISO_DATE)
                 apointmentDate.isBefore(LocalDate.now())

@@ -16,7 +16,9 @@ import com.example.thebarbershop.databinding.ActivityHomeBinding
 import com.example.thebarbershop.databinding.BottomNavigationBarBinding
 import com.example.thebarbershop.repositorys.AppointmentRepository
 import com.example.thebarbershop.repositorys.BusinessRepository
+import com.example.thebarbershop.uiStates.BaseUiState
 import com.example.thebarbershop.uiStates.HomeUiState
+import com.example.thebarbershop.utils.UiUtils
 import com.example.thebarbershop.views.BaseActivity
 import com.example.thebarbershop.views.NavigationHandler
 import com.example.thebarbershop.views.NewReservationActivity
@@ -39,10 +41,6 @@ class HomeActivity : BaseActivity() {
     private lateinit var nexToYouBusinessAdapter : NextToYouAdapter
     private val homeViewModel: HomeViewModel by viewModels()
 
-    companion object{
-        lateinit var auth : FirebaseAuth
-    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,26 +48,15 @@ class HomeActivity : BaseActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         val view = binding.root
         val contentFrame = findViewById<FrameLayout>(R.id.container)
-        val currentDate = Calendar.getInstance()
-        val year = currentDate.get(Calendar.YEAR)
-        val month = currentDate.get(Calendar.MONTH) + 1
-        val day = currentDate.get(Calendar.DAY_OF_MONTH)
         contentFrame.addView(view)
 
         highlightCurrentMenuItem()
 
-        val calendar = Calendar.getInstance()
-        calendar.set(year, month, day)
-
-        val dateFormat = SimpleDateFormat("EEEE, d 'de' MMM yyyy", Locale("pt", "PT"))
-        val formattedDate = dateFormat.format(calendar.time)
-
-        binding.dateTv.text = formattedDate
+        binding.dateTv.text = UiUtils.getCurrentDate()
 
         appointmentAdapter = AppointmentsAdapter(mutableListOf())
         binding.appointmentsRv.layoutManager = LinearLayoutManager(this)
         binding.appointmentsRv.adapter = appointmentAdapter
-        binding.dateTv.text = formattedDate;
         nexToYouBusinessAdapter = NextToYouAdapter(this, mutableListOf())
         binding.nextToYouRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.nextToYouRv.adapter = nexToYouBusinessAdapter
@@ -78,19 +65,20 @@ class HomeActivity : BaseActivity() {
         lifecycleScope.launch {
             homeViewModel.uiState.collect { uiState ->
                 when (uiState) {
-                    is HomeUiState.Loading ->{
+                    is BaseUiState.Loading ->{
                         //TODO : Show loading indicator
                     }
-                    is HomeUiState.Success -> {
+                    is BaseUiState.Success -> {
                         //TODO : Hide loading indicator
-                        appointmentAdapter.updateData(uiState.appointment)
-                        nexToYouBusinessAdapter.updateData(uiState.nexToYouBusiness)
-                        binding.userNameTv.text = uiState.userEmail
-                        binding.signInBtn.visibility = if (uiState.isAuthenticated) View.GONE else View.VISIBLE
-                        binding.signOutBtn.visibility = if (uiState.isAuthenticated) View.VISIBLE else View.GONE
+                        val homeData = uiState.data
+                        appointmentAdapter.updateData(homeData.appointment)
+                        nexToYouBusinessAdapter.updateData(homeData.nexToYouBusiness)
+                        binding.userNameTv.text = homeData.userEmail
+                        binding.signInBtn.visibility = if (homeData.isAuthenticated) View.GONE else View.VISIBLE
+                        binding.signOutBtn.visibility = if (homeData.isAuthenticated) View.VISIBLE else View.GONE
                     }
 
-                    is HomeUiState.Error -> {
+                    is BaseUiState.Error -> {
                         // Hide loading indicator
                         //TODO : Hide loading indicator
 
@@ -102,7 +90,9 @@ class HomeActivity : BaseActivity() {
         }
 
         binding.newReservationButton.setOnClickListener{
+            val userId = homeViewModel.getCurrentUserId()
             val intent = Intent(this, NewReservationActivity::class.java)
+            intent.putExtra("USER_ID", userId)
             startActivity(intent)
         }
 
