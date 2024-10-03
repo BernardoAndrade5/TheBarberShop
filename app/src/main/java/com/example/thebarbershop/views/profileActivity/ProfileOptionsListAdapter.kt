@@ -12,7 +12,7 @@ import com.example.thebarbershop.models.ProfileOption
 import com.example.thebarbershop.views.changePasswordActivity.ChangePasswordActivity
 import com.example.thebarbershop.views.myaccountActivity.MyAccountActivity
 import com.example.thebarbershop.views.myaddressActivity.MyAddressActivity
-import com.example.thebarbershop.views.myappointmentsActivity.MyAppointmentsActivity
+import com.example.thebarbershop.views.myappointmentsActivity.MyAppointmentsHistoryActivity
 import com.example.thebarbershop.views.myexpensesActivity.MyExpensesActivity
 import com.example.thebarbershop.views.mysubscriptionsActivity.MySubscriptionsActivity
 
@@ -66,7 +66,7 @@ class ProfileOptionsListAdapter (private val profileOptionsList: List<ProfileOpt
                     }
                     6 -> {//histórico de marcações
                         val context = holder.itemView.context
-                        val intent =Intent(context, MyAppointmentsActivity::class.java)
+                        val intent =Intent(context, MyAppointmentsHistoryActivity::class.java)
                         startActivity(context, intent, null);
                     }
                     7 -> {//despesas

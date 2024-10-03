@@ -4,17 +4,15 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.example.thebarbershop.databinding.ActivityMyaddressBinding
 import com.example.thebarbershop.views.BaseActivity
 import com.example.thebarbershop.views.homeActivity.HomeViewModel
 import com.example.thebarbershop.views.profileActivity.ProfileOptionsListAdapter
 import com.example.thebarbershop.views.profileActivity.ProfileOptionsProvider
 
-class MyAddressActivity:BaseActivity() {
+class MyAddressActivity:AppCompatActivity() {
     private lateinit var binding: ActivityMyaddressBinding
-    private val profileOptionsProvider = ProfileOptionsProvider()
-    private lateinit var profileOptionsAdapter: ProfileOptionsListAdapter
-    private val homeViewModel: HomeViewModel by viewModels()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +39,4 @@ class MyAddressActivity:BaseActivity() {
 
     }
 
-    override fun onHomeSelected() {
-        TODO("Not yet implemented")
-    }
 }

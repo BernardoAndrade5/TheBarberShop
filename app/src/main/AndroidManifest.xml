@@ -51,7 +51,7 @@
         <activity android:name=".views.changePasswordActivity.ChangePasswordActivity" android:exported="true"/>
         <activity android:name=".views.myaddressActivity.MyAddressActivity" android:exported="true"/>
         <activity android:name=".views.mysubscriptionsActivity.MySubscriptionsActivity" android:exported="true"/>
-        <activity android:name=".views.myappointmentsActivity.MyAppointmentsActivity" android:exported="true"/>
+        <activity android:name=".views.myappointmentsActivity.MyAppointmentsHistoryActivity" android:exported="true"/>
         <activity android:name=".views.myexpensesActivity.MyExpensesActivity" android:exported="true"/>
 
     </application>
